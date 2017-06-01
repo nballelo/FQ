@@ -20,33 +20,26 @@ import java.util.List;
  * Created by Ignacio on 31/05/2017.
  */
 
-public class ElMeuArrayAdapter extends ArrayAdapter<String> {
+public class ElMeuArrayAdapter extends ArrayAdapter<User> {
 
     private final Activity context;
-    private final List<String> itemname;
-    private final List<String> imgid;
+    private final List<User> users;
 
-
-
-    public ElMeuArrayAdapter(Activity context, List<String> itemname, List<String> imgid) {
-        super(context, R.layout.llistacos, itemname);
-
-
+    public ElMeuArrayAdapter(Activity context, List<User> users) {
+        super(context, R.layout.llistacos, users);
         this.context=context;
-        this.itemname=itemname;
-        this.imgid=imgid;
-
+        this.users=users;
     }
 
     public View getView(int position,View view,ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.llistacos, null,true);
 
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.item);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+        TextView txtTitle = (TextView) rowView.findViewById(R.id.Text);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
 
-        txtTitle.setText(itemname.get(position));
-        Picasso.with(getContext()).load(imgid.get(position)).into(imageView);
+        txtTitle.setText(users.get(position).getLogin());
+        Picasso.with(getContext()).load(users.get(position).getAvatar_url()).into(imageView);
         return rowView;
 
     };

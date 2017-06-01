@@ -59,20 +59,13 @@ public class Menu extends AppCompatActivity {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if(response.code()==200){
                     List<User> followers = (List<User>)response.body();
-
-                    List<String>nombres=new ArrayList<String>();
-                    List<String>list_URLs=new ArrayList<String>();
                     ListView listView = (ListView) findViewById(R.id.list);
-                    for (int i = 0; i < followers.size(); i++) {
-                        nombres.add(followers.get(i).getLogin());
-                        list_URLs.add(followers.get(i).getAvatar_url());
-                    }
 
-                    ElMeuArrayAdapter adapter=new ElMeuArrayAdapter(Menu.this, nombres, list_URLs);
+                    ElMeuArrayAdapter adapter=new ElMeuArrayAdapter(Menu.this, followers);
                     listView.setAdapter(adapter);
                 }
                 else {
-                    Toast.makeText(Menu.this, "HA HABIDO UN ERROR INESPERADO EN LA CONSULTA: "+response.code(), Toast.LENGTH_SHORT).show(); // se informa al usuario que el usuario no existe
+                    Toast.makeText(Menu.this, "Ha habido un error : "+response.code(), Toast.LENGTH_SHORT).show();
                     Menu.this.finish();
                 }
                 progressBar.setVisibility(View.INVISIBLE);
