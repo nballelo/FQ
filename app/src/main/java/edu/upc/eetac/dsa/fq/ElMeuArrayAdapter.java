@@ -1,5 +1,6 @@
 package edu.upc.eetac.dsa.fq;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -19,34 +20,34 @@ import java.util.List;
  * Created by Ignacio on 31/05/2017.
  */
 
-public class ElMeuArrayAdapter extends ArrayAdapter<User> {
-    private final Context context;
-    private final ArrayList<User>values;
-    public ElMeuArrayAdapter(Context context, ArrayList<User> values){
-        super(context,R.layout.llistacos,values);
+public class ElMeuArrayAdapter extends ArrayAdapter<String> {
+
+    private final Activity context;
+    private final List<String> itemname;
+    private final List<String> imgid;
+
+
+
+    public ElMeuArrayAdapter(Activity context, List<String> itemname, List<String> imgid) {
+        super(context, R.layout.llistacos, itemname);
+
+
         this.context=context;
-        this.values=values;
+        this.itemname=itemname;
+        this.imgid=imgid;
+
     }
-    @Override
-    public int getCount() {
-        int count=values.size(); //counts the total number of elements from the arrayList.
-        return count;
-    }
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
 
-        /* (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.llistacos, parent, false);
+    public View getView(int position,View view,ViewGroup parent) {
+        LayoutInflater inflater=context.getLayoutInflater();
+        View rowView=inflater.inflate(R.layout.llistacos, null,true);
 
-        }*/
-        LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView=layoutInflater.inflate(R.layout.llistacos,null);
-        User user=getItem(position);
-        TextView textView=(TextView)convertView.findViewById(R.id.textView2);
-        ImageView imageView=(ImageView)convertView.findViewById(R.id.imageView);
-        textView.setText(user.getLogin());
-        Picasso.with(context).load(user.getAvatar_url()).into(imageView);
+        TextView txtTitle = (TextView) rowView.findViewById(R.id.item);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
+        txtTitle.setText(itemname.get(position));
+        Picasso.with(getContext()).load(imgid.get(position)).into(imageView);
         return rowView;
-    }
+
+    };
 }
